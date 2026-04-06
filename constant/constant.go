@@ -99,6 +99,10 @@ const (
 	BusinessNotification      = 2001
 	BusinessNotificationEnd   = 2099
 
+	// BusinessNotification code definitions (used in SendBusinessNotification API's code field).
+	BusinessNotificationCodeAccountCancellation = "100001" // 用户注销
+	BusinessNotificationCodeAccountBlocked      = "100002" // 账号封禁/强制下线
+
 	MsgRevokeNotification  = 2101
 	DeleteMsgsNotification = 2102
 

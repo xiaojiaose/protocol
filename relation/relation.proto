@@ -279,6 +279,8 @@ message FriendInfoOnly {
   string operatorUserID = 6;
   string ex = 7;
   bool isPinned = 8;
+  string phoneNumber = 9;
+  string email = 10;
 }
 
 message getFriendInfoReq {

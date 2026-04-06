@@ -52,6 +52,7 @@ message GroupMemberFullInfo {
   string ex = 10;
   int64 muteEndTime = 11;
   string inviterUserID = 12;
+  int32 userStatus = 13;
 }
 
 message PublicUserInfo {
@@ -59,6 +60,7 @@ message PublicUserInfo {
   string nickname = 2;
   string faceURL = 3;
   string ex = 4;
+  int32 userStatus = 5;
 }
 
 message UserInfo {
@@ -69,6 +71,9 @@ message UserInfo {
   int64 createTime = 5;
   int32 appMangerLevel = 6;
   int32 globalRecvMsgOpt = 7;
+  int32 userStatus = 8;
+  string phoneNumber = 9;
+  string email = 10;
 }
 
 message UserInfoWithEx {
@@ -88,6 +93,7 @@ message FriendInfo {
   string operatorUserID = 6;
   string ex = 7;
   bool isPinned = 8;
+  int32 userStatus = 9;
 }
 
 message BlackInfo {
@@ -117,9 +123,11 @@ message FriendRequest {
   string fromUserID = 1;
   string fromNickname = 2;
   string fromFaceURL = 3;
+  int32 fromUserStatus = 14;
   string toUserID = 4;
   string toNickname = 5;
   string toFaceURL = 6;
+  int32 toUserStatus = 15;
   int32 handleResult = 7;
   string reqMsg = 8;
   int64 createTime = 9;
