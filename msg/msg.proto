@@ -265,6 +265,17 @@ message SearchMessageResp {
   int32 chatLogsNum = 2;
 }
 
+message SearchAdminBackgroundNotificationsReq {
+  string recvID = 1;
+  string category = 2;
+  sdkws.RequestPagination pagination = 3;
+}
+
+message SearchAdminBackgroundNotificationsResp {
+  repeated SearchedMsgData notifications = 1;
+  int32 total = 2;
+}
+
 message ChatLog {
   string serverMsgID = 1;
   string clientMsgID = 2;
@@ -401,6 +412,7 @@ service msg {
   rpc PullMessageBySeqs(sdkws.PullMessageBySeqsReq) returns (sdkws.PullMessageBySeqsResp);
   rpc GetSeqMessage(GetSeqMessageReq) returns (GetSeqMessageResp);
   rpc SearchMessage(SearchMessageReq) returns (SearchMessageResp);
+  rpc SearchAdminBackgroundNotifications(SearchAdminBackgroundNotificationsReq) returns (SearchAdminBackgroundNotificationsResp);
   // Send message
   rpc SendMsg(SendMsgReq) returns (SendMsgResp);
   // Send message with simplified request
