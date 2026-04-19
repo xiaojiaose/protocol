@@ -100,8 +100,14 @@ const (
 	BusinessNotificationEnd   = 2099
 
 	// BusinessNotification code definitions (used in SendBusinessNotification API's code field).
-	BusinessNotificationCodeAccountCancellation = "100001" // 用户注销
-	BusinessNotificationCodeAccountBlocked      = "100002" // 账号封禁/强制下线
+	BusinessNotificationCodeAccountCancellation      = "100001" // 用户注销
+	BusinessNotificationCodeAccountBlocked           = "100002" // 账号封禁/强制下线
+	BusinessNotificationCodePrivacyPhoneViewRequest  = "100003" // 请求查看手机号
+	BusinessNotificationCodePrivacyEmailViewRequest  = "100004" // 请求查看电子邮箱
+	BusinessNotificationCodePrivacyPhoneViewApproved = "100005" // 同意查看手机号
+	BusinessNotificationCodePrivacyPhoneViewRejected = "100006" // 拒绝查看手机号
+	BusinessNotificationCodePrivacyEmailViewApproved = "100007" // 同意查看电子邮箱
+	BusinessNotificationCodePrivacyEmailViewRejected = "100008" // 拒绝查看电子邮箱
 
 	MsgRevokeNotification  = 2101
 	DeleteMsgsNotification = 2102
