@@ -71,23 +71,23 @@ const (
 )
 
 const (
-	ContextLoginOtherDeviceFallback     = "检测到您的账号在新设备登录，若非本人操作请立即修改密码并开启账号验证。"
+	ContextLoginOtherDeviceFallback     = "监测到您的账号在新设备登录，若非本人操作请立即修改密码并开启两步验证。"
 	ContextAdminPublishVersionFallback  = "全新的「派友派对」设计系统已上线，立即体验更多互动玩法。"
 	ContextTemplateFriendApply          = "%s 请求添加你为好友：%s"
 	ContextTemplateFriendApplyApproved  = "%s 已同意了您的好友申请，现在可以开始聊天了"
 	ContextTemplateFriendApplyRejected  = "%s 已拒绝了您的好友申请"
-	ContextTemplateFriendHandleApproved = "%s 请求添加你为好友：%s，状态显示为已通过"
-	ContextTemplateFriendHandleRejected = "%s 请求添加你为好友：%s，状态显示为已拒绝"
+	ContextTemplateFriendHandleApproved = "%s 请求添加你为好友：%s"
+	ContextTemplateFriendHandleRejected = "%s 请求添加你为好友：%s"
 	ContextTemplateGroupApply           = "%s 请求加入 %s，%s"
-	ContextTemplateGroupInvited         = "你已被邀请进入 %s 讨论群"
+	ContextTemplateGroupInvited         = "你已被邀请加入 %s"
 	ContextTemplateGroupApplyRejected   = "管理员已拒绝您加入 %s 的申请"
-	ContextTemplateGroupHandleApproved  = "%s 请求加入 %s，状态显示为已通过"
-	ContextTemplateGroupHandleRejected  = "%s 请求加入 %s，状态显示为已拒绝"
+	ContextTemplateGroupHandleApproved  = "%s 请求加入 %s"
+	ContextTemplateGroupHandleRejected  = "%s 请求加入 %s"
 	ContextTemplatePrivacyApply         = "%s 请求查看您的%s信息"
-	ContextTemplatePrivacySelfPassed    = "%s 请求查看您的%s信息，状态显示为已通过"
-	ContextTemplatePrivacySelfRejected  = "%s 请求查看您的%s信息，状态显示为已拒绝"
-	ContextPrivacyApplyApproved         = "对方通过了您的手机号/邮箱信息查看申请"
-	ContextPrivacyApplyRejected         = "对方已拒绝了您的电子邮箱查看申请"
+	ContextTemplatePrivacySelfPassed    = "%s 请求查看您的%s信息"
+	ContextTemplatePrivacySelfRejected  = "%s 请求查看您的%s信息"
+	ContextPrivacyApplyApproved         = "对方通过了您的手机号/邮箱查看申请"
+	ContextPrivacyApplyRejected         = "对方已拒绝了您的手机号/邮箱查看申请"
 )
 
 const (
@@ -137,12 +137,13 @@ var eventSpecs = map[string]EventSpec{
 }
 
 type Message struct {
-	Title    string `json:"title"`
-	Context  string `json:"context"`
-	Code     int32  `json:"code"`
-	Status   string `json:"status"`
-	Category string `json:"category"`
-	Sender   string `json:"sender"`
+	Title    string         `json:"title"`
+	Content  string         `json:"content"`
+	Code     int32          `json:"code"`
+	Status   string         `json:"status"`
+	Category string         `json:"category"`
+	Ex       map[string]any `json:"ex"`
+	Sender   string         `json:"sender"`
 }
 
 func SpecByEvent(event string) (EventSpec, bool) {
@@ -183,26 +184,27 @@ func CategoryByEvent(event string) (string, bool) {
 }
 
 // NewMessage 用来构造最终下发给 App 的 JSON 协议体。
-// title/code/status 都从共享协议表里派生，调用方只负责提供动态 context，
+// title/code/status 都从共享协议表里派生，调用方只负责提供动态 content，
 // 这样可以避免业务层把协议结构再写散。
-func NewMessage(event, context string) (*Message, error) {
+func NewMessage(event, content string) (*Message, error) {
 	spec, ok := SpecByEvent(event)
 	if !ok {
 		return nil, errs.ErrArgs.WrapMsg("unknown admin background event", "event", event)
 	}
 	return &Message{
 		Title:    spec.DefaultTitle,
-		Context:  context,
+		Content:  content,
 		Code:     spec.Code,
 		Status:   spec.DefaultStatus,
 		Category: spec.Category,
+		Ex:       map[string]any{},
 		Sender:   Sender,
 	}, nil
 }
 
 // NewMessageWithTitle 只给少数需要临时覆盖标题的场景使用。
 // 即使允许覆盖 title，code/status/sender 仍然必须锚定到统一协议定义上。
-func NewMessageWithTitle(event, title, context string) (*Message, error) {
+func NewMessageWithTitle(event, title, content string) (*Message, error) {
 	spec, ok := SpecByEvent(event)
 	if !ok {
 		return nil, errs.ErrArgs.WrapMsg("unknown admin background event", "event", event)
@@ -212,10 +214,11 @@ func NewMessageWithTitle(event, title, context string) (*Message, error) {
 	}
 	return &Message{
 		Title:    title,
-		Context:  context,
+		Content:  content,
 		Code:     spec.Code,
 		Status:   spec.DefaultStatus,
 		Category: spec.Category,
+		Ex:       map[string]any{},
 		Sender:   Sender,
 	}, nil
 }
