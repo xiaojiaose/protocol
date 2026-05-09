@@ -71,7 +71,7 @@ const (
 )
 
 const (
-	ContextLoginOtherDeviceFallback     = "监测到您的账号在新设备登录，若非本人操作请立即修改密码并开启两步验证。"
+	ContextLoginOtherDeviceFallback     = "检测到您的账号在新设备登录，若非本人操作请立即修改密码并开启两步验证。"
 	ContextAdminPublishVersionFallback  = "全新的「派友派对」设计系统已上线，立即体验更多互动玩法。"
 	ContextTemplateFriendApply          = "%s 请求添加你为好友：%s"
 	ContextTemplateFriendApplyApproved  = "%s 已同意了您的好友申请，现在可以开始聊天了"
