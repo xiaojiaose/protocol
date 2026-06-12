@@ -34,6 +34,46 @@ func (x *GetSendMsgStatusReq) Check() error {
 	return nil
 }
 
+func (x *SetMessageReactionReq) Check() error {
+	if x.UserID == "" {
+		return errors.New("userID is empty")
+	}
+	if x.ConversationID == "" {
+		return errors.New("conversationID is empty")
+	}
+	if x.Seq <= 0 {
+		return errors.New("seq is invalid")
+	}
+	if x.ReactionType == "" {
+		return errors.New("reactionType is empty")
+	}
+	if x.Operation != 1 && x.Operation != 2 {
+		return errors.New("operation is invalid")
+	}
+	return nil
+}
+
+func (x *GetMessageReactionsReq) Check() error {
+	if x.UserID == "" {
+		return errors.New("userID is empty")
+	}
+	if x.ConversationID == "" {
+		return errors.New("conversationID is empty")
+	}
+	if len(x.Seqs) == 0 {
+		return errors.New("seqs is empty")
+	}
+	if len(x.Seqs) > 100 {
+		return errors.New("seqs exceeds 100")
+	}
+	for _, seq := range x.Seqs {
+		if seq <= 0 {
+			return errors.New("seqs contains invalid value")
+		}
+	}
+	return nil
+}
+
 //func (x *ModifyMessageReactionExtensionsReq) Check() error {
 //	if x.ConversationID == "" {
 //		return errs.ErrArgs.Wrap("conversationID is empty")

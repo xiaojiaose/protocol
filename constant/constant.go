@@ -108,6 +108,7 @@ const (
 	BusinessNotificationCodePrivacyPhoneViewRejected = "100006" // 拒绝查看手机号
 	BusinessNotificationCodePrivacyEmailViewApproved = "100007" // 同意查看电子邮箱
 	BusinessNotificationCodePrivacyEmailViewRejected = "100008" // 拒绝查看电子邮箱
+	BusinessNotificationCodeMessageReactionChanged   = "MESSAGE_REACTION_CHANGED"
 
 	MsgRevokeNotification  = 2101
 	DeleteMsgsNotification = 2102

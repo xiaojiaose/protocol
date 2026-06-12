@@ -398,6 +398,41 @@ message GetLastMessageResp {
   map<string,sdkws.MsgData> msgs = 1;
 }
 
+message SetMessageReactionReq {
+  string userID = 1;
+  string conversationID = 2;
+  int64 seq = 3;
+  string reactionType = 4;
+  int32 operation = 5;
+}
+
+message MessageReactionSummary {
+  string reactionType = 1;
+  int64 count = 2;
+  bool isReactedByMe = 3;
+  repeated string userIDs = 4;
+}
+
+message SetMessageReactionResp {
+  int64 seq = 1;
+  repeated MessageReactionSummary reactions = 2;
+}
+
+message GetMessageReactionsReq {
+  string userID = 1;
+  string conversationID = 2;
+  repeated int64 seqs = 3;
+}
+
+message MessageReactionResult {
+  int64 seq = 1;
+  repeated MessageReactionSummary reactions = 2;
+}
+
+message GetMessageReactionsResp {
+  repeated MessageReactionResult results = 1;
+}
+
 service msg {
   // Get min and max seq (including the user and specified groups)
   rpc GetMaxSeq(sdkws.GetMaxSeqReq) returns (sdkws.GetMaxSeqResp);
@@ -435,6 +470,8 @@ service msg {
   rpc SetSendMsgStatus(SetSendMsgStatusReq) returns (SetSendMsgStatusResp);
   // Get the message delivery status
   rpc GetSendMsgStatus(GetSendMsgStatusReq) returns (GetSendMsgStatusResp);
+  rpc SetMessageReaction(SetMessageReactionReq) returns (SetMessageReactionResp);
+  rpc GetMessageReactions(GetMessageReactionsReq) returns (GetMessageReactionsResp);
   rpc RevokeMsg(RevokeMsgReq) returns (RevokeMsgResp);
   // mark as read
   rpc MarkMsgsAsRead(MarkMsgsAsReadReq) returns (MarkMsgsAsReadResp);

@@ -22,6 +22,7 @@ message SingleMsgToUserResults {
 message OnlineBatchPushOneMsgReq {
   sdkws.MsgData msgData = 1;
   repeated string pushToUserIDs = 2;
+  repeated int32 targetPlatformIDs = 3;
 }
 
 message OnlineBatchPushOneMsgResp {

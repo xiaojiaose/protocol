@@ -25,6 +25,9 @@ message GroupInfo {
   int32 applyMemberFriend = 15;
   int64 notificationUpdateTime = 16;
   string notificationUserID = 17;
+  int32 quitGroup = 18;
+  int32 muteAllMembers = 19;
+  int32 showMemberAndCount = 20;
 }
 
 message GroupInfoForSet {
@@ -37,6 +40,9 @@ message GroupInfoForSet {
   openim.protobuf.Int32Value needVerification = 7;
   openim.protobuf.Int32Value lookMemberInfo = 8;
   openim.protobuf.Int32Value applyMemberFriend = 9;
+  openim.protobuf.Int32Value quitGroup = 10;
+  openim.protobuf.Int32Value muteAllMembers = 11;
+  openim.protobuf.Int32Value showMemberAndCount = 12;
 }
 
 message GroupMemberFullInfo {
@@ -609,4 +615,10 @@ message StreamMsgTips {
 message ConversationDeleteTips {
   string userID = 1;
   repeated string conversationIDs = 2;
+}
+
+message BusinessNotificationTips {
+  string code = 1;
+  string data = 2;
+  string msg = 3;
 }
